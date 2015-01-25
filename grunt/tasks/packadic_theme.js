@@ -1,0 +1,87 @@
+/*
+ * grunt-minscript-tpl
+ *
+ *
+ * Copyright (c) 2014 Robin Radic
+ * Licensed under the MIT license.
+ */
+
+'use strict';
+var radic = require('radic'),
+    util = radic.util,
+    path = require('path'),
+    fs = require('fs-extra'),
+    async = require('async'),
+    _ = require('lodash'),
+    rimraf = require('rimraf'),
+    preprocess = require('preprocess');
+
+
+module.exports = function (grunt) {
+
+    function clean(filepath, options) {
+        if (!grunt.file.exists(filepath)) {
+            return false;
+        }
+
+        // Only delete cwd or outside cwd if --force enabled. Be careful, people!
+        if (!options.force) {
+            if (grunt.file.isPathCwd(filepath)) {
+                grunt.verbose.error();
+                grunt.fail.warn('Cannot delete the current working directory.');
+                return false;
+            } else if (!grunt.file.isPathInCwd(filepath)) {
+                grunt.verbose.error();
+                grunt.fail.warn('Cannot delete files outside the current working directory.');
+                return false;
+            }
+        }
+
+        try {
+            // Actually delete. Or not.
+            if (!options['no-write']) {
+                rimraf.sync(filepath);
+            }
+            grunt.verbose.writeln((options['no-write'] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + '...');
+        } catch (e) {
+            grunt.log.error();
+            grunt.fail.warn('Unable to delete "' + filepath + '" file (' + e.message + ').', e);
+        }
+    }
+
+    grunt.registerTask('packadic_src2dev', 'The best Grunt plugin ever.', function () {
+        var self = this;
+        var taskDone = this.async();
+        var cwd = process.cwd();
+        var ok = grunt.log.ok;
+        var options = this.options({
+            variables: {},
+            dir: 'dev'
+        });
+
+        // clean first
+        clean(options.dir, {force: false, 'no-write': false});
+        ok('Cleaned up dir: ' + options.dir);
+        fs.ensureDirSync(options.dir);
+        ok('Created dir: ' + options.dir);
+        fs.copySync('src', options.dir);
+        ok('Copied all files: ' + options.dir);
+
+        var dirs = [
+            path.join(options.dir, '_includes/_layouts')
+        ];
+        dirs.forEach(function (dir) {
+            var files = fs.readdirSync(dir);
+            files.forEach(function (file) {
+                var filePath = path.join(dir, file)
+                preprocess.preprocessFileSync(filePath, filePath, options.variables);
+                ok('Preprocessed ' + filePath);
+            });
+        });
+        //fs.removeSync(path.join(options.dir, '_includes/partials'));
+        //ok('Removed partials');
+
+        taskDone();
+    });
+
+};

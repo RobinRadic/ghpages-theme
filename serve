@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Starting to serve from: $1"
+cd $1
+export JEKYLL_GITHUB_TOKEN="47ffa034ce0d4fcdd4464fe210f63cb36882c971"
+jekyll serve --watch --trace --config _config.yml

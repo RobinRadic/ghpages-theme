@@ -1,0 +1,26 @@
+
+// Do not adjust
+$color-tsr-green-dark:      #06562C;
+$color-tsr-green-muted: #089146;
+$color-tsr-green: #98CB32;
+$color-tsr-green-2: #9ACA3B;
+$color-tsr-green-3: #74BF43;
+$color-tsr-green-4: #ACB135;
+
+$color-tsr-white: #d8d7d7;
+$color-tsr-grey: #636363;
+$color-tsr-black: #2c2828;
+
+$color-tsr-logo-green: #98CB32;
+$color-tsr-logo-white: #ebebec;
+$color-tsr-logo-grey: #666;
+
+
+// Adjustable colors
+$color-tsr-body-light: $color-tsr-white;                      // text color on dark background
+$color-tsr-body-dark: $color-tsr-black;                       // text color on light background
+
+$color-tsr-header-light: $color-tsr-logo-white;               // header color on dark background
+$color-tsr-header-light-inverse: $color-tsr-logo-green;       // header color on dark background
+$color-tsr-header-dark: $color-tsr-logo-grey;                 // header color on light background
+$color-tsr-header-dark-inverse: $color-tsr-logo-green;        // header color on light background

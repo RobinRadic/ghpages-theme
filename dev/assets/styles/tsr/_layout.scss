@@ -1,0 +1,183 @@
+@import "core";
+
+body {
+    background-image: url($image-path + "/bg-texture.jpg"), url($image-path + "/bg.jpg");
+    background-position: top center, top left;
+    background-repeat: no-repeat, repeat;
+    padding: 0 !important;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid #535353;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-shadow: 2px 2px 8px rgba(34, 34, 31, 0.76);
+
+    span {
+        color: $color-tsr-logo-green;
+    }
+}
+
+.content-container {
+    font-size: 12px;
+    line-height: 2;
+}
+
+div.header-container {
+    height: 163px;
+}
+
+div.header {
+    > img.logo {
+        margin: 15px 0;
+    }
+
+    .social {
+        position: absolute;
+        right: 0;
+        top: -40px;
+
+        a {
+            color: rgba(2, 2, 2, 0.27);
+            font-size: 30px;
+            margin-right: 10px;
+            &:hover {
+                color: $color-tsr-green-3
+            }
+        }
+    }
+}
+
+.highlight {
+    background: url($image-path + "/highlight.jpg") repeat-x;
+    @include container-fixed();
+
+    color: $color-tsr-body-dark;
+
+    overflow: hidden;
+    position: relative;
+
+    height: 455px;
+
+    &.highlight-closed {
+        display: none;
+    }
+}
+
+.highlight-view {
+
+    $highlight-view-transition: 0.8s linear all;
+    &.ng-enter, &.ng-leave {
+        @include transition($highlight-view-transition);
+        position: absolute;
+        left: 0;
+        width: 100%;
+    }
+
+    &.ng-enter {
+        z-index: 1000;
+        left: 1480px;
+        opacity: 0;
+    }
+
+    &.ng-enter.ng-enter-active {
+        left: 0;
+        opacity: 1;
+    }
+
+    &.ng-leave {
+        z-index: 1001;
+        left: 0;
+        opacity: 1;
+    }
+
+    &.ng-leave.ng-leave-active {
+        left: -1480px;
+        opacity: 0;
+    }
+}
+
+.content-container {
+    width: 960px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content {
+
+}
+
+.pre-footer {
+    @include container-fixed();
+    height: 390px;
+    background: url($image-path + '/pre-footer-bg.jpg') top center;
+
+}
+
+.pre-footer-block {
+    padding: 10px 15px;
+    h1, h2, h3, h4 {
+        color: $color-tsr-logo-green;
+    }
+
+    &.block-facebook {
+
+    }
+    &.block-twitter {
+
+    }
+    &.block-contact {
+        .form-control {
+            border-radius: 0px;
+            border: 1px solid #393939;
+            background-color: transparent;
+            font-family: $headings-font-family;
+            margin-bottom: 7px;
+            font-size: 11px;
+            box-shadow: none;
+        }
+    }
+
+}
+
+.footer {
+    @include container-fixed();
+    height: 120px;
+    position: relative;
+    background: url($image-path + '/footer.jpg') top center;
+}
+
+.footer-nav {
+    list-style: none;
+    padding: 20px 0;
+    margin-bottom: 50px;
+    li {
+        float: left;
+        margin-right: 30px;
+        text-transform: uppercase;
+        font-family: "Droid sans", sans-serif;
+        font-size: 1.1em;
+    }
+
+}
+
+.footer-legal {
+    @include make-row();
+
+    .copyright, .created-by {
+        @include make-xs-column(12);
+        @include make-sm-column(6);
+        display: inline-block;
+        font-size: 10px;
+        font-family: $headings-font-family;
+    }
+
+    .created-by {
+        text-align: right;
+    }
+
+}
