@@ -1,8 +1,7 @@
 ---
 ---
 [
-{% for post in site.posts %}
-{% capture tags %}{% for tag in post.tags %}{{ tag }} {% endfor %}{% endcapture %}
+{% for item in site.data.navigation %}
 {
 "title": "{{ post.title }}",
 "description": {{ post.description | jsonify }},

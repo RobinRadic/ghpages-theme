@@ -12,8 +12,8 @@ timezone: Amsterdam/Europe
 #https://github.com/jekyll/github-metadata
 repository: packadic/ghpages-theme
 owner: robinradic
-#- jekyll-github-metadata
 gems:
+  - jekyll-github-metadata
   - jemoji
   - jekyll-redirect-from
   - jekyll-sitemap
