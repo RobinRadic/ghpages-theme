@@ -12,8 +12,9 @@ module.exports = function(grunt){
     var concatJsdev = [];
     ['sidemenu', 'packadic'].forEach(function(fileName){
         concatJsdev.push('src/assets/js/' + fileName + '.js');
-    })
-    grunt.initConfig({
+    });
+
+    var cfg = {
         copy: {
             fonts: {
                 files: [
@@ -96,7 +97,9 @@ module.exports = function(grunt){
             },
             serve: ['jekyll', 'watch']
         }
-    });
+    };
+
+    grunt.initConfig(cfg);
 
     grunt.registerTask('default', []);
     grunt.registerTask('build', ['packadic_src2dev', 'copy:fonts', 'concat:jsdev', 'sass:dev', 'browserify']);

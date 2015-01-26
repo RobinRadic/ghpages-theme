@@ -1,10 +1,6 @@
+# My Cool Project Changelog
+
+*...here be dragons*
 
 
-
-
-
-
-
-
-
-
+Generated with [node-hooked-changelog](http://github.com/SupplyFrame/node-hooked-changelog)
