@@ -23,7 +23,7 @@
 <script>
     $(document).ready(function () {
         var packadic = Packadic.init({
-
+            {% if site.debug %}debug: {{ site.debug }}{% endif %}
         });
 
         console.log('window.packadic', packadic);

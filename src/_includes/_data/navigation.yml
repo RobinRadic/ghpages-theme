@@ -30,10 +30,6 @@
       link: /github-jquery-widgets
       icon: fa fa-git font-yellow-casablanca
 
-    - name: WoW Raid Icons
-      link: /wow-raid-icons
-      icon: fa fa-gamepad font-yellow-casablanca
-
     - name: SwiftApi 2
       link: /swiftapi
       icon: fa fa-stack-overflow
@@ -42,22 +38,21 @@
       link: /projects
       icon: fa fa-css3
       children:
-        - name: Image 2 scss
-          link: /projects/grunt-image-base64-sass
+        - name: Radical
+          link: /grunt-radical
           icon: fa fa-css3 font-green-jungle
 
-        - name: My tasks
-          link: /grunt-tasks
-          icon: fa fa-css3 font-green-jungle
-
-        - name: Radic widget
-          link: http://github.com/RobinRadic/grunt-radic-widget
+        - name: R.js modular builder
+          link: /rjs-modular-builder
           icon: fa fa-css3 font-green-jungle
 
     - name: Miscellaneous
       link: /projects
       icon: fa fa-slack
       children:
+        - name: WoW Raid Icons
+          link: /wow-raid-icons
+          icon: fa fa-gamepad font-yellow-casablanca
 
         - name: RadicOS
           link: /RadicOS
@@ -65,13 +60,17 @@
 
 
 
-- name: Blog posts
+- name: Posts
   link: /posts
   icon: fa fa-pencil-square-o
 
 - name: Repositories
   link: /repositories
   icon: fa fa-github
+
+- name: Contact
+  link: /contact
+  icon: fa fa-bullhorn
 
 
 

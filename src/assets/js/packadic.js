@@ -6,6 +6,14 @@
         return typeof obj !== 'undefined';
     }
 
+    var debug = {
+        'sidemenu-apply-test-json': function($el){
+            $el.on('click', function(e){
+                e.preventDefault();
+                window.packadic.$sidemenu.sideMenu('createFromJSON', $.test.menuItems);
+            });
+        }
+    };
     /**
      *
      * @param options
@@ -14,7 +22,8 @@
      * @property {$} $sidemenu - the side menu
      */
     function Packadic(options) {
-        this.config = _.merge({
+        this.options = _.merge({
+            debug: true,
             selectors: {
                 sidemenu: '#menu'
             },
@@ -25,7 +34,7 @@
 
         this.$el = $(document.createElement('div'));
 
-        $.each(this.config.selectors, function (name, selector) {
+        $.each(this.options.selectors, function (name, selector) {
             this['$' + name] = $(selector);
         }.bind(this));
 
@@ -34,11 +43,22 @@
         this.init();
     }
 
-    window.Packadic = Packadic;
 
     Packadic.prototype = {
         init: function(){
             this.$sidemenu.sideMenu(this.options.sideMenu);
+
+
+            if(this.options.debug === true){
+                $('.site-debug').show();
+                $('*[data-debug]').each(function(){
+                    var $this = $(this);
+                    debug[$this.data('debug')]($this);
+                });
+                this.$sidemenu.sideMenu('createFromJSON', $.test.menuItems);
+            } else {
+                $('.site-debug').hide();
+            }
         },
         destroy: function(){
 
@@ -53,10 +73,12 @@
             }
             this._eventHandlers[type].push();*/
             this.$el.on(type, cb);
+
         }
     };
 
     Packadic.init = function (options) {
         return window.packadic = new Packadic(options);
-    }
+    };
+    window.Packadic = Packadic;
 }));

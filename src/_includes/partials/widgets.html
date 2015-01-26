@@ -13,7 +13,7 @@
             $(function(){
                 var config = {};
                 {% if widget contains 'config' %}
-                config = {{ widget.config | jsonify }}
+                config = {{ widget.options | jsonify }}
                 {% endif %}
                 $('{{ widget.selector }}').{{ widget_data.func }}(config);
             });
