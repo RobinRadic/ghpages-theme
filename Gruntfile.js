@@ -9,6 +9,10 @@ module.exports = function(grunt){
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
+    var concatJsdev = [];
+    ['sidemenu', 'packadic'].forEach(function(fileName){
+        concatJsdev.push('src/assets/js/' + fileName + '.js');
+    })
     grunt.initConfig({
         copy: {
             fonts: {
@@ -21,27 +25,16 @@ module.exports = function(grunt){
         concat: {
             jsdev: {
                 files: [
-                    { expand: true, cwd: 'src/assets/js', src: '*.js', dest: 'dev/assets/js' },
+                    { src: concatJsdev, dest: 'dev/assets/js/theme.js' }
                 ]
             }
         },
         browserify: {
-            vendor: {
-                src: [],
-                dest: 'public/vendor.js',
-                options: {
-                    require: ['jquery', 'moment'],
-                    alias: [
-                        //'./lib/moments.js:momentWrapper', //can alias file names
-                        //'events:evt' //can alias modules
-                    ]
-                }
-            },
             dev: {
                 src: ['src/assets/js/bundle/**/*.js'],
                 dest: 'dev/assets/js/bundle.js',
                 options: {
-                    require: ['jquery', 'moment', 'lodash'],
+                    require: ['jquery', 'moment', 'lodash']
                 }
             }
         },
@@ -64,7 +57,6 @@ module.exports = function(grunt){
         },
         jekyll: {
             options: {
-                bundleExec: true,
                 config: 'dev/_config.yml',
                 safe: true,
                 watch: true,
@@ -107,7 +99,7 @@ module.exports = function(grunt){
     });
 
     grunt.registerTask('default', []);
-    grunt.registerTask('build', ['packadic_src2dev', 'copy:fonts', 'sass:dev', 'browserify']);
+    grunt.registerTask('build', ['packadic_src2dev', 'copy:fonts', 'concat:jsdev', 'sass:dev', 'browserify']);
 
     grunt.registerTask('serve', ['build', 'concurrent:serve']);
 

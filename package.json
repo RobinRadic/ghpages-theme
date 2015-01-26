@@ -15,6 +15,18 @@
     "user",
     "github-pages"
   ],
+  "changelog": {
+    "title": "My Cool Project",
+    "commit-url": "https://github.com/jbloggs/my-cool-project/commit/${commitId}",
+    "issue-url": "https://github.com/jbloggs/my-cool-project/issues/${issueId}",
+    "template": {
+      "header": "./changelog-templates/header.template",
+      "footer": "./changelog-templates/footer.template",
+      "commit": "./changelog-templates/commit.template",
+      "issue": "./changelog-templates/issue.template",
+      "version": "./changelog-templates/version.template"
+    }
+  },
   "author": "Robin Radic",
   "license": "MIT",
   "bugs": {
@@ -62,6 +74,7 @@
     "jquery": "^2.1.3",
     "jquery-ui": "^1.10.5",
     "moment": "^2.9.0",
+    "node-hooked-changelog": "0.0.6",
     "radic": "^0.5.4"
   }
 }

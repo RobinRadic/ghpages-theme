@@ -4,8 +4,17 @@
 
     function Packadic(options){
         this.config = _.merge({
-
+            selectors: {
+                sidemenu: '#menu'
+            }
         }, options);
+
+        $.each(this.config.selectors, function(selector, name){
+            this['$' + name] = $(selector);
+        });
+
+
+        console.log(this);
     }
     window.Packadic = Packadic;
 

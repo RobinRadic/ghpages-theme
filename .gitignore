@@ -10,3 +10,6 @@
 /html-report
 /jsdoctheme
 /src/assets/vendor
+/dev
+/dist
+/_site
