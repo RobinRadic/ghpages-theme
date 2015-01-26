@@ -10,10 +10,12 @@
         },
 
 
-        _init: function(){
 
+        _create: function(){
+
+            console.log('init sidemenu', this);
             var $this = this.element,
-                $toggle = this.settings.toggle,
+                $toggle = this.options.toggle,
                 obj = this;
 
             if (this._isIE() <= 9) {
@@ -25,15 +27,16 @@
             }
 
             //add the "doubleTapToGo" class to active items if needed
-            if (obj.settings._doubleTapToGo) {
+            if (obj.options._doubleTapToGo) {
                 $this.find("li.active").has("ul").children("a").addClass("doubleTapToGo");
             }
 
             $this.find("li").has("ul").children("a").on("click" + "." + this.widgetName, function(e) {
                 e.preventDefault();
 
+                console.log('click', e);
                 //Do we need to enable the double tap
-                if (obj.settings._doubleTapToGo) {
+                if (obj.options._doubleTapToGo) {
 
                     //if we hit a second time on the link and the href is valid, navigate to that url
                     if (obj._doubleTapToGo($(this)) && $(this).attr("href") !== "#" && $(this).attr("href") !== "") {

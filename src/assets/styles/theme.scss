@@ -1,1 +1,15 @@
 @import "base";
+
+.sidemenu {
+    // Other sidemenu styles located in components/sidemenu
+    display: block;
+    float: left;
+    width: 250px;
+    background: #333;
+}
+
+.content {
+    display: block;
+    overflow: hidden;
+    width: auto;
+}

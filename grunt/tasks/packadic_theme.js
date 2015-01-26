@@ -9,6 +9,8 @@
 'use strict';
 var radic = require('radic'),
     util = radic.util,
+    bin = radic.binwraps,
+    git = radic.git,
     path = require('path'),
     fs = require('fs-extra'),
     async = require('async'),
@@ -49,6 +51,44 @@ module.exports = function (grunt) {
         }
     }
 
+    grunt.registerTask('packadic', 'Intialize the project', function (target) {
+        var self = this;
+        var taskDone = this.async();
+        var cwd = process.cwd();
+        var ok = grunt.log.ok;
+        var options = this.options({
+            variables: {},
+            dir: 'dev',
+            dist: 'dist',
+            distRepo: 'packadic/packadic.github.io',
+            distBranch: 'master',
+            srcRepo: 'packadic/ghpages-theme',
+            header: {
+                path: 'dev/threading'
+
+            }
+
+        });
+
+        if(target === 'init') {
+            // create dist dir & chdir into it
+            fs.mkdirpSync(options.affwdir);
+            process.chdir('dist');
+            ok('created dist');
+
+            // check out the remote
+            git('init');
+            git('remote', 'add', 'origin', 'https://github.com/' + options.distRepo);
+            git('pull origin ' + options.distBranch);
+            ok('pulled origin ' + options.distBranch);
+
+
+            process.chdir(cwd);
+        }
+
+        taskDone();
+    });
+
     grunt.registerTask('packadic_src2dev', 'The best Grunt plugin ever.', function () {
         var self = this;
         var taskDone = this.async();
@@ -60,7 +100,7 @@ module.exports = function (grunt) {
         });
 
         // clean first
-        clean(options.dir, {force: false, 'no-write': false});
+        clean(options.dir + '/*', {force: false, 'no-write': false});
         ok('Cleaned up dir: ' + options.dir);
         fs.ensureDirSync(options.dir);
         ok('Created dir: ' + options.dir);

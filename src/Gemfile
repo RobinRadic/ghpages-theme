@@ -1,4 +1,8 @@
 source 'https://rubygems.org'
 
 #gem 'jekyll-github-metadata'
-gem 'github-pages', 27
+gem 'github-pages', 32
+gem 'guard'
+gem 'guard-jekyll-plus'
+gem 'guard-livereload'
+gem 'listen', '2.8.3'

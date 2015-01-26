@@ -15,10 +15,6 @@
     "user",
     "github-pages"
   ],
-  "changelog": {
-    "title": "My Cool Project"
-    }
-  },
   "author": "Robin Radic",
   "license": "MIT",
   "bugs": {
