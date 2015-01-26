@@ -1,3 +1,5 @@
+debug: true
+
 name: Packadic github pages theme
 description: A github pages theme
 keywords: [github,pages,theme,jekyll]
