@@ -17,16 +17,16 @@
 <link rel="shortcut icon" href="{{ IMGDIR }}/favicon.svg">
 
 <!-- build:css /assets/global.css -->
-<link href="{{ ASSETDIR }}/styles/core.css" type="text/css" rel="stylesheet">
-<link href="{{ ASSETDIR }}/styles/components.css" type="text/css" rel="stylesheet">
-<link href="{{ ASSETDIR }}/styles/theme.css" type="text/css" rel="stylesheet">
+<link href="/assets/styles/core.css" type="text/css" rel="stylesheet">
+<link href="/assets/styles/components.css" type="text/css" rel="stylesheet">
+<link href="/assets/styles/theme.css" type="text/css" rel="stylesheet">
 <!-- endbuild -->
 
 
 {% if page.custom-css %}
 {% for name in page.custom-css %}
-<link href="{{ ASSETDIR }}/{{ name }}.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/{{ name }}.css" rel="stylesheet" type="text/css"/>
 {% endfor %}
 {% endif %}
 
-<script src="{{ ASSETDIR }}/vendor/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/vendor/jquery/dist/jquery.min.js" type="text/javascript"></script>

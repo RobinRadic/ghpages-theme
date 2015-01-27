@@ -1,7 +1,7 @@
 debug: true
 
-name: Packadic github pages theme
-description: A github pages theme
+name: Packadic
+description: Github pages theme
 keywords: [github,pages,theme,jekyll]
 
 url: ##URL##

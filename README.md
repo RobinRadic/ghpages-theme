@@ -34,7 +34,7 @@ This includes directories that will be created when running tasks.
 #### Files  
 | File | Description |
 |:----------|:------------|
-| .bowerrc | bower components will be installed into src/assets/vendor |
+| .bowerrc | bower components will be installed into `src/assets/vendor` |
 | CHANGELOG.md | Contains all changes. This will be auto updated every npm version with all commit messages |
 | serve.sh | executing this will serve the `dev` directory |
   
@@ -53,6 +53,11 @@ The other files and directories should be self-explenatory
 #### Configuration
 tba
   
+## Credits
+#### Contributors
+- [Robin Radic](https://github.com/robinradic)  
+  
+#### Third party plugins
 ## License
 Copyright 2015 - Robin Radic.
 [MIT License](http://radic.mit-license.org)

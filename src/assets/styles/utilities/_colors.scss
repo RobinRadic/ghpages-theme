@@ -13,7 +13,7 @@
         @include label-variant(material-color($name, '500'))
     }
 
-    .font-#{$name} {
+    .font-#{$name}, .fa-#{$name} {
         color: material-color($name, '500');
     }
 }

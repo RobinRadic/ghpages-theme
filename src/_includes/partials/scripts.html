@@ -1,25 +1,32 @@
 <!--[if lt IE 9]>
 <!-- build:js /assets/oldieshim.js -->
-<script src="{{ ASSETDIR }}/vendor/respond/dest/respond.min.js"></script>
-<script src="{{ ASSETDIR }}/vendor/excanvas/excanvas.js"></script>
+<script src="/assets/vendor/respond/dest/respond.min.js"></script>
+<script src="/assets/vendor/excanvas/excanvas.js"></script>
 <!-- endbuild -->
 <!--[endif]-->
-<!-- build:js /assets/js/vendor.js -->
-<script src="{{ ASSETDIR }}/vendor/modernizr/modernizr.js"></script>
-<script src="{{ ASSETDIR }}/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-<script src="{{ ASSETDIR }}/vendor/jquery-ui/jquery-ui.min.js"></script>
+<!-- build:js /assets/vendor.js -->
+<script src="/assets/vendor/modernizr/modernizr.js"></script>
+<script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+<script src="/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script src="/assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script src="{{ ASSETDIR }}/vendor/lodash/lodash.min.js"></script>
-<script src="{{ ASSETDIR }}/vendor/moment/min/moment.min.js"></script>
+<script src="/assets/vendor/lodash/lodash.min.js"></script>
+<script src="/assets/vendor/moment/min/moment.min.js"></script>
 
 
-<script src="{{ ASSETDIR }}/vendor/jquery.uniform/jquery.uniform.min.js"></script>
-<script src="{{ ASSETDIR }}/vendor/bootbox/bootbox.js"></script>
-<script src="{{ ASSETDIR }}/vendor/toastr/toastr.js"></script>
+<script src="/assets/vendor/jquery.uniform/jquery.uniform.min.js"></script>
+<script src="/assets/vendor/bootbox/bootbox.js"></script>
+<script src="/assets/vendor/toastr/toastr.js"></script>
+
+
+<script src="/assets/vendor/async-each/index.js"></script>
+<script src="/assets/vendor/async-waterfall/index.js"></script>
+<script src="/assets/vendor/eventemitter2/lib/eventemitter2.js"></script>
+<script src="/assets/vendor/handlebars/handlebars.runtime.min.js"></script>
 <!-- endbuild -->
 
 
-<script src="{{ ASSETDIR }}/js/theme.js"></script>
+<script src="/assets/js/theme.js"></script>
 <script>
     $(document).ready(function () {
         var packadic = Packadic.init({
@@ -40,7 +47,7 @@
 
 {% if page.custom-js %}
 {% for name in page.custom-js %}
-<script src="{{ ASSETDIR }}/{{ name }}.js"></script>
+<script src="/assets/{{ name }}.js"></script>
 {% endfor %}
 {% endif %}
 

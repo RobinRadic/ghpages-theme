@@ -7,56 +7,57 @@
  */
 
 'use strict';
-var radic = require('radic'),
+var radic = require( 'radic' ),
     util = radic.util,
     bin = radic.binwraps,
     git = radic.git,
-    path = require('path'),
-    fs = require('fs-extra'),
-    async = require('async'),
-    _ = require('lodash'),
-    rimraf = require('rimraf'),
-    preprocess = require('preprocess');
+    path = require( 'path' ),
+    fs = require( 'fs-extra' ),
+    async = require( 'async' ),
+    _ = require( 'lodash' ),
+    glob = require( 'glob' ),
+    rimraf = require( 'rimraf' ),
+    preprocess = require( 'preprocess' );
 
 
-module.exports = function (grunt) {
+module.exports = function ( grunt ) {
 
-    function clean(filepath, options) {
-        if (!grunt.file.exists(filepath)) {
-            return false;
-        }
+    function clean( pattern, options ) {
 
-        // Only delete cwd or outside cwd if --force enabled. Be careful, people!
-        if (!options.force) {
-            if (grunt.file.isPathCwd(filepath)) {
-                grunt.verbose.error();
-                grunt.fail.warn('Cannot delete the current working directory.');
-                return false;
-            } else if (!grunt.file.isPathInCwd(filepath)) {
-                grunt.verbose.error();
-                grunt.fail.warn('Cannot delete files outside the current working directory.');
-                return false;
+        glob.sync( pattern, {} ).forEach( function ( filepath ) {
+
+            // Only delete cwd or outside cwd if --force enabled. Be careful, people!
+            if ( !options.force ) {
+                if ( grunt.file.isPathCwd( filepath ) ) {
+                    grunt.verbose.error();
+                    grunt.fail.warn( 'Cannot delete the current working directory.' );
+                    return false;
+                } else if ( !grunt.file.isPathInCwd( filepath ) ) {
+                    grunt.verbose.error();
+                    grunt.fail.warn( 'Cannot delete files outside the current working directory.' );
+                    return false;
+                }
             }
-        }
 
-        try {
-            // Actually delete. Or not.
-            if (!options['no-write']) {
-                rimraf.sync(filepath);
+            try {
+                // Actually delete. Or not.
+                if ( !options[ 'no-write' ] ) {
+                    rimraf.sync( filepath );
+                }
+                grunt.verbose.writeln( (options[ 'no-write' ] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + '...' );
+            } catch (e) {
+                grunt.log.error();
+                grunt.fail.warn( 'Unable to delete "' + filepath + '" file (' + e.message + ').', e );
             }
-            grunt.verbose.writeln((options['no-write'] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + '...');
-        } catch (e) {
-            grunt.log.error();
-            grunt.fail.warn('Unable to delete "' + filepath + '" file (' + e.message + ').', e);
-        }
+        } );
     }
 
-    grunt.registerTask('packadic', 'Intialize the project', function (target) {
+    grunt.registerTask( 'packadic', 'Intialize the project', function ( target ) {
         var self = this;
         var taskDone = this.async();
         var cwd = process.cwd();
         var ok = grunt.log.ok;
-        var options = this.options({
+        var options = this.options( {
             variables: {},
             dir: 'dev',
             dist: 'dist',
@@ -68,60 +69,61 @@ module.exports = function (grunt) {
 
             }
 
-        });
+        } );
 
-        if(target === 'init') {
+        if ( target === 'init' ) {
             // create dist dir & chdir into it
-            fs.mkdirpSync(options.affwdir);
-            process.chdir('dist');
-            ok('created dist');
+            fs.mkdirpSync( options.affwdir );
+            process.chdir( 'dist' );
+            ok( 'created dist' );
 
             // check out the remote
-            git('init');
-            git('remote', 'add', 'origin', 'https://github.com/' + options.distRepo);
-            git('pull origin ' + options.distBranch);
-            ok('pulled origin ' + options.distBranch);
+            git( 'init' );
+            git( 'remote', 'add', 'origin', 'https://github.com/' + options.distRepo );
+            git( 'pull origin ' + options.distBranch );
+            ok( 'pulled origin ' + options.distBranch );
 
 
-            process.chdir(cwd);
+            process.chdir( cwd );
         }
 
         taskDone();
-    });
+    } );
 
-    grunt.registerTask('packadic_src2dev', 'The best Grunt plugin ever.', function () {
+    grunt.registerTask( 'packadic_src2dev', 'The best Grunt plugin ever.', function () {
         var self = this;
         var taskDone = this.async();
         var cwd = process.cwd();
         var ok = grunt.log.ok;
-        var options = this.options({
+        var options = this.options( {
             variables: {},
             dir: 'dev'
-        });
+        } );
 
         // clean first
-        clean(options.dir + '/*', {force: false, 'no-write': false});
-        ok('Cleaned up dir: ' + options.dir);
-        fs.ensureDirSync(options.dir);
-        ok('Created dir: ' + options.dir);
-        fs.copySync('src', options.dir);
-        ok('Copied all files: ' + options.dir);
+        clean( options.dir + '/*', {force: false, 'no-write': false} );
+
+        ok( 'Cleaned up dir: ' + options.dir );
+        fs.ensureDirSync( options.dir );
+        ok( 'Created dir: ' + options.dir );
+        fs.copySync( 'src', options.dir );
+        ok( 'Copied all files: ' + options.dir );
 
         var dirs = [
-            path.join(options.dir, '_includes/_layouts')
+            path.join( options.dir, '_includes/_layouts' )
         ];
-        dirs.forEach(function (dir) {
-            var files = fs.readdirSync(dir);
-            files.forEach(function (file) {
-                var filePath = path.join(dir, file)
-                preprocess.preprocessFileSync(filePath, filePath, options.variables);
-                ok('Preprocessed ' + filePath);
-            });
-        });
+        dirs.forEach( function ( dir ) {
+            var files = fs.readdirSync( dir );
+            files.forEach( function ( file ) {
+                var filePath = path.join( dir, file )
+                preprocess.preprocessFileSync( filePath, filePath, options.variables );
+                ok( 'Preprocessed ' + filePath );
+            } );
+        } );
         //fs.removeSync(path.join(options.dir, '_includes/partials'));
         //ok('Removed partials');
 
         taskDone();
-    });
+    } );
 
 };

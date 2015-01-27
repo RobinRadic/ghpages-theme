@@ -9,9 +9,10 @@ module.exports = function(grunt){
     require('load-grunt-tasks')(grunt);
     require('time-grunt')(grunt);
 
-    var concatJsdev = [];
-    ['sidemenu', 'packadic'].forEach(function(fileName){
+    var concatJsdev = [], cleanJsdev = [];
+    ['sidemenu', 'topmenu', 'packadic'].forEach(function(fileName){
         concatJsdev.push('src/assets/js/' + fileName + '.js');
+        cleanJsdev.push('dev/assets/js/' + fileName + '.js');
     });
 
     var cfg = {
@@ -23,6 +24,11 @@ module.exports = function(grunt){
                 ]
             }
         },
+        clean: {
+            jsdev: {
+                src: cleanJsdev
+            }
+        },
         concat: {
             jsdev: {
                 files: [
@@ -32,10 +38,10 @@ module.exports = function(grunt){
         },
         browserify: {
             dev: {
-                src: ['src/assets/js/bundle/**/*.js'],
+                src: ['src/assets/js/bundles/**/*.js'],
                 dest: 'dev/assets/js/bundle.js',
                 options: {
-                    require: ['jquery', 'moment', 'lodash']
+                    require: ['util', 'eventemitter2']
                 }
             }
         },
@@ -53,6 +59,32 @@ module.exports = function(grunt){
                 }]
             }
         },
+
+        useminPrepare: {
+            build: {
+                options: {
+                    root: 'dev',
+                    steps: {
+                        js: ['concat', 'uglifyjs'],
+                        css: ['cssmin']
+                    },
+                    dest: 'dev'
+                },
+                files: {
+                    src: ['dev/_includes/_layouts/*.html']
+                }
+            }
+        },
+
+        usemin: {
+            options: {
+                assetsDirs: ['dev/assets']
+            },
+            html: {
+                src: ['dev/_includes/_layouts/*.html']
+            }
+        },
+
         packadic_src2dev: {
 
         },
@@ -102,8 +134,15 @@ module.exports = function(grunt){
     grunt.initConfig(cfg);
 
     grunt.registerTask('default', []);
-    grunt.registerTask('build', ['packadic_src2dev', 'copy:fonts', 'concat:jsdev', 'sass:dev', 'browserify']);
+    grunt.registerTask('build', ['packadic_src2dev', 'copy:fonts', 'concat:jsdev', 'sass:dev', 'browserify', 'clean:jsdev']);
 
+    grunt.registerTask('minify', [
+        'useminPrepare', // optimize all files and assets
+        'concat',
+        'uglify',
+        'cssmin',
+        'usemin'
+    ]);
     grunt.registerTask('serve', ['build', 'concurrent:serve']);
 
 };

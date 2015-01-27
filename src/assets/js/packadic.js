@@ -1,19 +1,23 @@
-(function (factory) {
-    factory(jQuery, _, window);
-}(function ($, _, window) {
+(function ( factory ) {
+    factory( jQuery, _, window );
+}( function ( $, _, window ) {
 
-    function defined(obj) {
+
+
+    function defined( obj ) {
         return typeof obj !== 'undefined';
     }
 
     var debug = {
-        'sidemenu-apply-test-json': function($el){
-            $el.on('click', function(e){
+        'sidemenu-apply-test-json': function ( $el ) {
+            $el.on( 'click', function ( e ) {
                 e.preventDefault();
-                window.packadic.$sidemenu.sideMenu('createFromJSON', $.test.menuItems);
-            });
+                window.packadic.$sidemenu.sideMenu( 'createFromJSON', $.test.menuItems );
+            } );
         }
     };
+
+
     /**
      *
      * @param options
@@ -21,64 +25,101 @@
      * @property {$} $el - used for event handlers within Packadic
      * @property {$} $sidemenu - the side menu
      */
-    function Packadic(options) {
-        this.options = _.merge({
+    function Packadic( options ) {
+
+        this.options = _.merge( {
             debug: true,
             selectors: {
-                sidemenu: '#menu'
+                sidebar: 'aside.sidemenu',
+                topnav: 'nav.navbar-topmenu',
+                sidemenu: '#sidemenu',
+                topmenu: '#topmenu'
             },
-            sideMenu: {
+            sideMenu: {},
+            topMenu: {}
+        }, options );
 
-            }
-        }, options);
+        this.$el = $( document.createElement( 'div' ) );
 
-        this.$el = $(document.createElement('div'));
+        this.window = $( window );
+        this.document = $( window.document );
 
-        $.each(this.options.selectors, function (name, selector) {
-            this['$' + name] = $(selector);
-        }.bind(this));
+        $.each( this.options.selectors, function ( name, selector ) {
+            this[ '$' + name ] = $( selector );
+        }.bind( this ) );
 
-        console.log(this);
+        console.log( this );
 
         this.init();
     }
 
 
+
+
     Packadic.prototype = {
-        init: function(){
-            this.$sidemenu.sideMenu(this.options.sideMenu);
+        init: function () {
+            this.$sidemenu.sideMenu( this.options.sideMenu );
+            this.$sidemenu.sideMenu( 'createFromJSON', this.navigation( 'sidemenu' ) );
+
+            this.$topmenu.topMenu( this.options.topMenu );
+            this.$topmenu.topMenu( 'createFromJSON', this.navigation( 'topmenu' ) );
 
 
-            if(this.options.debug === true){
-                $('.site-debug').show();
-                $('*[data-debug]').each(function(){
-                    var $this = $(this);
-                    debug[$this.data('debug')]($this);
-                });
-                this.$sidemenu.sideMenu('createFromJSON', $.test.menuItems);
+            this.window.on( 'resize', this.handleResize( this ) );
+            this.handleResize( this )();
+
+            if ( this.options.debug === true ) {
+                $( '.site-debug' ).show();
+                $( '*[data-debug]' ).each( function () {
+                    var $this = $( this );
+                    debug[ $this.data( 'debug' ) ]( $this );
+                } );
             } else {
-                $('.site-debug').hide();
+                $( '.site-debug' ).hide();
             }
         },
-        destroy: function(){
+        destroy: function () {
 
         },
-        //_eventHandlers: {},
-        _trigger: function (type, data) {
-            this.$el.trigger(_.merge({type: type}, data));
+        handleResize: function ( self ) {
+            return function ( e ) {
+                console.log( 'handleREsize', this, 'e', e );
+                var height = this.window.outerHeight() - this.$topnav.outerHeight();
+                this.$sidebar.height( height );
+            }.bind( self )
         },
-        on: function (type, cb) {
-            /*if (!defined(this._eventHandlers[type])) {
-                this._eventHandlers[type] = [];
+        navigation: function ( which ) {
+            return this.options.jekyll.navigation[ which ];
+        },
+        api: function ( endpoint, cb ) {
+            var async = defined( cb );
+            var config = {
+                url: '/api/' + endpoint,
+                dataType: 'json',
+                async: async,
+                type: 'GET'
+            };
+            if ( async ) {
+                config.success = cb;
             }
-            this._eventHandlers[type].push();*/
-            this.$el.on(type, cb);
+            return $.ajax( config );
 
+        },
+        _trigger: function ( type, data ) {
+            this.$el.trigger( _.merge( {type: type}, data ) );
+        },
+        on: function ( type, cb ) {
+            this.$el.on( type, cb );
         }
     };
 
-    Packadic.init = function (options) {
-        return window.packadic = new Packadic(options);
+    /**
+     * Static init function that instansiates Packadic and puts it into window.packadic
+     * @param options
+     * @returns {Packadic}
+     */
+    Packadic.init = function ( options ) {
+        return window.packadic = new Packadic( options );
     };
     window.Packadic = Packadic;
-}));
+} ));

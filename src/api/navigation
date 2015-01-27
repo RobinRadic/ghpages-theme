@@ -2,17 +2,7 @@
 ---
 [
 {% for item in site.data.navigation %}
-{
-"title": "{{ post.title }}",
-"description": {{ post.description | jsonify }},
-"url": "{{ post.url }}",
-"tags": {{ post.tags | jsonify }},
-"date": "{{ post.date | date: '%D' }}",
-"date_iso": "{{ post.date | date: '%F' }}",
-"id": "{{ post.id }}",
-"category": "{{ post.category }}",
-"content": {{ post.content | jsonify }}
-},
+
 {% endfor %}
 false
 ]

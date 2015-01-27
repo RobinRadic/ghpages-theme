@@ -7,7 +7,7 @@ minify_content: false
 ---
 
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-topmenu" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -17,16 +17,18 @@ minify_content: false
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">metisMenu</a>
+            <a class="navbar-brand" href="index.html">{{ site.name }}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" id="topmenu">
+                <!--
                 <li class="active"><a href="index.html">Vertical Menu</a></li>
                 <li><a href="metisFolder.html">Folder View</a></li>
                 <li><a href="hover.html">Hover Option For Desktop</a></li>
                 <li><a href="zurb.html">Foundation | Zurb</a></li>
+                -->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -36,7 +38,8 @@ minify_content: false
 <div class="clearfix">
     <aside class="sidemenu">
         <nav class="sidemenu-nav">
-            <ul id="menu">
+            <ul id="sidemenu">
+                <!--
                 <li class="active">
                     <a href="#">
                         <span class="sidemenu-nav-item-icon fa fa-github fa-lg"></span>
@@ -135,6 +138,7 @@ minify_content: false
                         </li>
                     </ul>
                 </li>
+                -->
             </ul>
         </nav>
     </aside>
